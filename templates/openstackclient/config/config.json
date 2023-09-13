@@ -1,0 +1,25 @@
+{
+    "command": "/bin/sleep infinity",
+    "config_files": [
+        {
+            "source": "/var/lib/config-data/clouds.yaml",
+            "dest": "/home/cloud-admin/.config/openstack/clouds.yaml",
+            "owner": "cloud-admin",
+            "perm": "0644"
+        },
+        {
+            "source": "/var/lib/config-data/secure.yaml",
+            "dest": "/home/cloud-admin/.config/openstack/secure.yaml",
+            "owner": "cloud-admin",
+            "perm": "0644"
+        },
+        {
+            "source": "/var/lib/config-data/ca/*",
+            "dest": "/etc/pki/ca-trust/source/anchors/",
+            "owner": "root",
+            "perm": "0644",
+            "merge": true,
+            "optional": true
+        }
+    ]
+}

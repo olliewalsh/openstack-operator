@@ -30,8 +30,10 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/controller/controllerutil"
 
 	keystonev1 "github.com/openstack-k8s-operators/keystone-operator/api/v1beta1"
+	"github.com/openstack-k8s-operators/lib-common/modules/common"
 	condition "github.com/openstack-k8s-operators/lib-common/modules/common/condition"
 	"github.com/openstack-k8s-operators/lib-common/modules/common/configmap"
+	"github.com/openstack-k8s-operators/lib-common/modules/common/env"
 	helper "github.com/openstack-k8s-operators/lib-common/modules/common/helper"
 	common_rbac "github.com/openstack-k8s-operators/lib-common/modules/common/rbac"
 	"github.com/openstack-k8s-operators/lib-common/modules/common/secret"
@@ -172,6 +174,42 @@ func (r *OpenStackClientReconciler) Reconcile(ctx context.Context, req ctrl.Requ
 		return ctrl.Result{RequeueAfter: time.Duration(5) * time.Second}, nil
 	}
 
+	clientLabels := map[string]string{
+		common.AppSelector: "openstackclient",
+	}
+
+	configVars := make(map[string]env.Setter)
+
+	cms := []util.Template{
+		// ConfigMap holding kolla config
+		{
+			Name:          fmt.Sprintf("%s-config-data", instance.Name),
+			Namespace:     instance.Namespace,
+			Type:          util.TemplateTypeConfig,
+			InstanceType:  instance.Kind,
+			ConfigOptions: nil,
+			Labels:        clientLabels,
+		},
+	}
+	err = configmap.EnsureConfigMaps(ctx, helper, instance, cms, &configVars)
+	if err != nil {
+		if k8s_errors.IsNotFound(err) {
+			instance.Status.Conditions.Set(condition.FalseCondition(
+				clientv1.OpenStackClientReadyCondition,
+				condition.RequestedReason,
+				condition.SeverityInfo,
+				clientv1.OpenStackClientConfigMapWaitingMessage))
+			return ctrl.Result{RequeueAfter: time.Duration(10) * time.Second}, nil
+		}
+		instance.Status.Conditions.Set(condition.FalseCondition(
+			clientv1.OpenStackClientReadyCondition,
+			condition.ErrorReason,
+			condition.SeverityWarning,
+			clientv1.OpenStackClientReadyErrorMessage,
+			err.Error()))
+		return ctrl.Result{}, err
+	}
+
 	_, configMapHash, err := configmap.GetConfigMapAndHashWithName(ctx, helper, instance.Spec.OpenStackConfigMap, instance.Namespace)
 	if err != nil {
 		if k8s_errors.IsNotFound(err) {
@@ -190,6 +228,7 @@ func (r *OpenStackClientReconciler) Reconcile(ctx context.Context, req ctrl.Requ
 			err.Error()))
 		return ctrl.Result{}, err
 	}
+	configVars[instance.Spec.OpenStackConfigMap] = env.SetValue(configMapHash)
 
 	_, secretHash, err := secret.GetSecret(ctx, helper, instance.Spec.OpenStackConfigSecret, instance.Namespace)
 	if err != nil {
@@ -209,6 +248,34 @@ func (r *OpenStackClientReconciler) Reconcile(ctx context.Context, req ctrl.Requ
 			err.Error()))
 		return ctrl.Result{}, err
 	}
+	configVars[instance.Spec.OpenStackConfigSecret] = env.SetValue(secretHash)
+
+	if instance.Spec.CaSecretName != "" {
+		_, secretHash, err = secret.GetSecret(ctx, helper, instance.Spec.OpenStackConfigSecret, instance.Namespace)
+		if err != nil {
+			if k8s_errors.IsNotFound(err) {
+				instance.Status.Conditions.Set(condition.FalseCondition(
+					clientv1.OpenStackClientReadyCondition,
+					condition.RequestedReason,
+					condition.SeverityInfo,
+					clientv1.OpenStackClientSecretWaitingMessage))
+				return ctrl.Result{RequeueAfter: time.Duration(10) * time.Second}, nil
+			}
+			instance.Status.Conditions.Set(condition.FalseCondition(
+				clientv1.OpenStackClientReadyCondition,
+				condition.ErrorReason,
+				condition.SeverityWarning,
+				clientv1.OpenStackClientReadyErrorMessage,
+				err.Error()))
+			return ctrl.Result{}, err
+		}
+		configVars[instance.Spec.OpenStackConfigSecret] = env.SetValue(secretHash)
+	}
+
+	configVarsHash, err := util.HashOfInputHashes(configVars)
+	if err != nil {
+		return ctrl.Result{}, err
+	}
 
 	instance.Status.Conditions.Set(condition.FalseCondition(
 		clientv1.OpenStackClientReadyCondition,
@@ -216,10 +283,7 @@ func (r *OpenStackClientReconciler) Reconcile(ctx context.Context, req ctrl.Requ
 		condition.SeverityInfo,
 		clientv1.OpenStackClientInputReady))
 
-	clientLabels := map[string]string{
-		"app": "openstackclient",
-	}
-	pod := openstackclient.ClientPod(instance, clientLabels, configMapHash, secretHash)
+	pod := openstackclient.ClientPod(instance, clientLabels, configVarsHash)
 
 	op, err := controllerutil.CreateOrPatch(ctx, r.Client, pod, func() error {
 		pod.Spec.Containers[0].Image = instance.Spec.ContainerImage
