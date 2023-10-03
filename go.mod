@@ -13,12 +13,12 @@ require (
 	github.com/openstack-k8s-operators/dataplane-operator/api v0.1.1-0.20230928164440-a955424c43ef
 	github.com/openstack-k8s-operators/glance-operator/api v0.1.2-0.20230928094722-adaea00db401
 	github.com/openstack-k8s-operators/heat-operator/api v0.1.1-0.20230928022009-63f4c93693b8
-	github.com/openstack-k8s-operators/horizon-operator/api v0.1.1-0.20230927133505-e0a30ad65a01
+	github.com/openstack-k8s-operators/horizon-operator/api v0.1.1-0.20231003030856-ea1986da02c2
 	github.com/openstack-k8s-operators/infra-operator/apis v0.1.1-0.20230927145535-98de8aa29c2e
 	github.com/openstack-k8s-operators/ironic-operator/api v0.1.1-0.20230927134553-8c5a9c47ca79
-	github.com/openstack-k8s-operators/keystone-operator/api v0.1.1-0.20230927105404-11cb6a68c984
-	github.com/openstack-k8s-operators/lib-common/modules/certmanager v0.0.0-20231001084618-12369665b166
-	github.com/openstack-k8s-operators/lib-common/modules/common v0.1.1-0.20231001084618-12369665b166
+	github.com/openstack-k8s-operators/keystone-operator/api v0.1.1-0.20231001084639-804f0f7cc39a
+	github.com/openstack-k8s-operators/lib-common/modules/certmanager v0.0.0-20231003132907-ac381258ad77
+	github.com/openstack-k8s-operators/lib-common/modules/common v0.1.1-0.20231003132907-ac381258ad77
 	github.com/openstack-k8s-operators/manila-operator/api v0.1.1-0.20230928195132-c19d2f673d7d
 	github.com/openstack-k8s-operators/mariadb-operator/api v0.1.1-0.20230928152002-65395552e015
 	github.com/openstack-k8s-operators/neutron-operator/api v0.1.1-0.20230927135156-a3209100b1f3
@@ -79,7 +79,7 @@ require (
 	github.com/munnerz/goautoneg v0.0.0-20191010083416-a7dc8b61c822 // indirect
 	github.com/openshift/api v3.9.0+incompatible
 	github.com/openstack-k8s-operators/lib-common/modules/openstack v0.1.1-0.20231001084618-12369665b166 //indirect
-	github.com/openstack-k8s-operators/lib-common/modules/storage v0.1.1-0.20230927082538-4f614f333d17 //indirect
+	github.com/openstack-k8s-operators/lib-common/modules/storage v0.1.1-0.20231001084618-12369665b166 //indirect
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/prometheus/client_golang v1.16.0 // indirect
 	github.com/prometheus/client_model v0.4.0 // indirect
@@ -125,10 +125,6 @@ replace github.com/openstack-k8s-operators/openstack-operator/apis => ./apis
 // must consistent within modules and service operators
 replace github.com/openshift/api => github.com/openshift/api v0.0.0-20230414143018-3367bc7e6ac7 //allow-merging
 
-replace github.com/openstack-k8s-operators/lib-common/modules/common => github.com/stuggi/lib-common/modules/common v0.0.0-20230929092549-f68a217ec028
+replace github.com/openstack-k8s-operators/keystone-operator/api => github.com/olliewalsh/keystone-operator/api v0.0.0-20231003142420-1e280ac17e7f
 
-replace github.com/openstack-k8s-operators/lib-common/modules/certmanager => github.com/stuggi/lib-common/modules/certmanager v0.0.0-20230929092549-f68a217ec028
-
-replace github.com/openstack-k8s-operators/keystone-operator/api => github.com/stuggi/keystone-operator/api v0.0.0-20231002064623-6a3a240e6a0e
-
-replace github.com/openstack-k8s-operators/horizon-operator/api => github.com/stuggi/horizon-operator/api v0.0.0-20230929044853-2b97c45d10c0
+replace github.com/openstack-k8s-operators/glance-operator/api => github.com/olliewalsh/glance-operator/api v0.0.0-20231003191903-ebbddc1c0a05
