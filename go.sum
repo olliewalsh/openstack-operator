@@ -129,6 +129,8 @@ github.com/modern-go/reflect2 v1.0.2 h1:xBagoLtFs94CBntxluKeaWgTMpvLxC4ur3nMaC9G
 github.com/modern-go/reflect2 v1.0.2/go.mod h1:yWuevngMOJpCy52FWWMvUC8ws7m/LJsjYzDa0/r8luk=
 github.com/munnerz/goautoneg v0.0.0-20191010083416-a7dc8b61c822 h1:C3w9PqII01/Oq1c1nUAm88MOHcQC9l5mIlSMApZMrHA=
 github.com/munnerz/goautoneg v0.0.0-20191010083416-a7dc8b61c822/go.mod h1:+n7T8mK8HuQTcFwEeznm/DIxMOiR9yIdICNftLE1DvQ=
+github.com/olliewalsh/keystone-operator/api v0.0.0-20231019131120-54eb6e18118e h1:FujrlJjHElZY9gyx+/Usp4jFS7OKsRFNTqRGgJe0kPI=
+github.com/olliewalsh/keystone-operator/api v0.0.0-20231019131120-54eb6e18118e/go.mod h1:sDYtAWryP7mF2v4XfmKdAoFquVAMts2J5PuYFV9VBQU=
 github.com/onsi/ginkgo/v2 v2.13.0 h1:0jY9lJquiL8fcf3M4LAXN5aMlS/b2BV86HFFPCPMgE4=
 github.com/onsi/ginkgo/v2 v2.13.0/go.mod h1:TE309ZR8s5FsKKpuB1YAQYBzCaAfUgatB/xlT/ETL/o=
 github.com/onsi/gomega v1.28.0 h1:i2rg/p9n/UqIDAMFUJ6qIUUMcsqOuUHgbpbu235Vr1c=
@@ -149,8 +151,6 @@ github.com/openstack-k8s-operators/infra-operator/apis v0.3.1-0.20231012092711-5
 github.com/openstack-k8s-operators/infra-operator/apis v0.3.1-0.20231012092711-5f52f15720bf/go.mod h1:Zx2FewCh3EFd62QGE7WnZBiAg0Spkm+FNM04eSRby1Q=
 github.com/openstack-k8s-operators/ironic-operator/api v0.3.1-0.20231014140921-5dc594250975 h1:10PgjR/q2q3NJQMINXZNaiDAlliK2UqjqTMGDfosJ2k=
 github.com/openstack-k8s-operators/ironic-operator/api v0.3.1-0.20231014140921-5dc594250975/go.mod h1:QJA4yh2B6lgZzrOOb0iW8JyDmB7uRT/Mokiwalca3Cw=
-github.com/openstack-k8s-operators/keystone-operator/api v0.3.1-0.20231013095818-732d852436d1 h1:BIo93Hmk6n8Z8N1cyXCqmRTL3QQQQIoLxXH+xyl4kfs=
-github.com/openstack-k8s-operators/keystone-operator/api v0.3.1-0.20231013095818-732d852436d1/go.mod h1:sDYtAWryP7mF2v4XfmKdAoFquVAMts2J5PuYFV9VBQU=
 github.com/openstack-k8s-operators/lib-common/modules/common v0.3.1-0.20231011150636-e8a0540a3c32 h1:r24jE5tdacLivcZczb3t6RvbvHp6kXQrW2ECuekzgH8=
 github.com/openstack-k8s-operators/lib-common/modules/common v0.3.1-0.20231011150636-e8a0540a3c32/go.mod h1:xXAuy7HtWN4p7LF5Q+NHLkwAsKVh0KrzpnuPYIG3XaA=
 github.com/openstack-k8s-operators/lib-common/modules/openstack v0.3.1-0.20231011150636-e8a0540a3c32 h1:n9UNbe3JsJW6IYtk57y/gvYSdiV8W6L4N0PtkZ2EsEg=

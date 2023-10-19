@@ -121,3 +121,5 @@ replace github.com/openstack-k8s-operators/openstack-operator/apis => ./apis
 // mschuppert: map to latest commit from release-4.13 tag
 // must consistent within modules and service operators
 replace github.com/openshift/api => github.com/openshift/api v0.0.0-20230414143018-3367bc7e6ac7 //allow-merging
+
+replace github.com/openstack-k8s-operators/keystone-operator/api => github.com/olliewalsh/keystone-operator/api v0.0.0-20231019131120-54eb6e18118e
