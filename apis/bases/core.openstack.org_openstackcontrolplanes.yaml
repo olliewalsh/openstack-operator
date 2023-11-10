@@ -8267,6 +8267,13 @@ spec:
                       serviceUser:
                         default: neutron
                         type: string
+                      tls:
+                        properties:
+                          caSecretName:
+                            type: string
+                          ovnDbIssuer:
+                            type: string
+                        type: object
                     required:
                     - containerImage
                     - databaseInstance
@@ -9910,6 +9917,13 @@ spec:
                                   x-kubernetes-int-or-string: true
                                 type: object
                             type: object
+                          tls:
+                            properties:
+                              caSecretName:
+                                type: string
+                              ovnDbIssuer:
+                                type: string
+                            type: object
                         required:
                         - ovnContainerImage
                         - ovsContainerImage
@@ -9991,6 +10005,13 @@ spec:
                               type: string
                             storageRequest:
                               type: string
+                            tls:
+                              properties:
+                                caSecretName:
+                                  type: string
+                                ovnDbIssuer:
+                                  type: string
+                              type: object
                           required:
                           - containerImage
                           - dbType
@@ -10052,6 +10073,13 @@ spec:
                                   pattern: ^(\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))))?$
                                   x-kubernetes-int-or-string: true
                                 type: object
+                            type: object
+                          tls:
+                            properties:
+                              caSecretName:
+                                type: string
+                              ovnDbIssuer:
+                                type: string
                             type: object
                         required:
                         - containerImage
