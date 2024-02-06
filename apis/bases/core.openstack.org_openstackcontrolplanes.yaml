@@ -8698,6 +8698,11 @@ spec:
                             type: object
                           caBundleSecretName:
                             type: string
+                          ovndb:
+                            properties:
+                              secretName:
+                                type: string
+                            type: object
                         type: object
                     required:
                     - containerImage
@@ -10516,6 +10521,13 @@ spec:
                                   x-kubernetes-int-or-string: true
                                 type: object
                             type: object
+                          tls:
+                            properties:
+                              caBundleSecretName:
+                                type: string
+                              secretName:
+                                type: string
+                            type: object
                         required:
                         - ovnContainerImage
                         - ovsContainerImage
@@ -10591,6 +10603,13 @@ spec:
                               type: string
                             storageRequest:
                               type: string
+                            tls:
+                              properties:
+                                caBundleSecretName:
+                                  type: string
+                                secretName:
+                                  type: string
+                              type: object
                           required:
                           - containerImage
                           - dbType
@@ -10646,6 +10665,13 @@ spec:
                                   pattern: ^(\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))))?$
                                   x-kubernetes-int-or-string: true
                                 type: object
+                            type: object
+                          tls:
+                            properties:
+                              caBundleSecretName:
+                                type: string
+                              secretName:
+                                type: string
                             type: object
                         required:
                         - containerImage

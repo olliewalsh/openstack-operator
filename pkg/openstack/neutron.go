@@ -4,6 +4,8 @@ import (
 	"context"
 	"fmt"
 
+	certmgrv1 "github.com/cert-manager/cert-manager/pkg/apis/certmanager/v1"
+	"github.com/openstack-k8s-operators/lib-common/modules/certmanager"
 	"github.com/openstack-k8s-operators/lib-common/modules/common/condition"
 	"github.com/openstack-k8s-operators/lib-common/modules/common/helper"
 	"github.com/openstack-k8s-operators/lib-common/modules/common/service"
@@ -58,6 +60,35 @@ func ReconcileNeutron(ctx context.Context, instance *corev1beta1.OpenStackContro
 	// preserve any previously set TLS certs,set CA cert
 	if instance.Spec.TLS.Enabled(service.EndpointInternal) {
 		instance.Spec.Neutron.Template.TLS = neutronAPI.Spec.TLS
+
+		serviceName := "neutron"
+		// create ovndb client certificate for neutron
+		certRequest := certmanager.CertificateRequest{
+			IssuerName: OvnDbCaName,
+			CertName:   fmt.Sprintf("%s-ovndbs", serviceName),
+			Duration:   nil,
+			Hostnames: []string{
+				fmt.Sprintf("%s.%s.svc", serviceName, instance.Namespace),
+				fmt.Sprintf("%s.%s.svc.%s", serviceName, instance.Namespace, "cluster.local"),
+			},
+			Ips: nil,
+			Usages: []certmgrv1.KeyUsage{
+				certmgrv1.UsageKeyEncipherment,
+				certmgrv1.UsageDigitalSignature,
+				certmgrv1.UsageClientAuth,
+			},
+		}
+		certSecret, ctrlResult, err := certmanager.EnsureCert(
+			ctx,
+			helper,
+			certRequest)
+		if err != nil {
+			return ctrl.Result{}, err
+		} else if (ctrlResult != ctrl.Result{}) {
+			return ctrl.Result{}, nil
+		}
+
+		instance.Spec.Neutron.Template.TLS.OvnDb.SecretName = &certSecret.Name
 	}
 	instance.Spec.Neutron.Template.TLS.CaBundleSecretName = instance.Status.TLS.CaBundleSecretName
 

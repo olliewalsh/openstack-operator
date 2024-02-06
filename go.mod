@@ -4,7 +4,7 @@ go 1.20
 
 require (
 	github.com/blang/semver/v4 v4.0.0
-	github.com/cert-manager/cert-manager v1.11.5
+	github.com/cert-manager/cert-manager v1.13.4
 	github.com/ghodss/yaml v1.0.0
 	github.com/go-logr/logr v1.4.1
 	github.com/google/uuid v1.6.0
@@ -88,7 +88,7 @@ require (
 	github.com/rhobs/obo-prometheus-operator/pkg/apis/monitoring v0.64.1-rhobs3 // indirect
 	github.com/rhobs/observability-operator v0.0.20 // indirect
 	github.com/robfig/cron/v3 v3.0.1 // indirect
-	github.com/sirupsen/logrus v1.9.2 // indirect
+	github.com/sirupsen/logrus v1.9.3 // indirect
 	github.com/spf13/pflag v1.0.5 // indirect
 	go.uber.org/multierr v1.11.0 // indirect
 	golang.org/x/mod v0.15.0 // indirect
@@ -109,7 +109,7 @@ require (
 	k8s.io/component-base v0.28.7 // indirect
 	k8s.io/klog/v2 v2.110.1 // indirect
 	k8s.io/kube-openapi v0.0.0-20231010175941-2dd684a91f00 // indirect
-	sigs.k8s.io/gateway-api v0.6.0 // indirect
+	sigs.k8s.io/gateway-api v0.8.0 // indirect
 	sigs.k8s.io/json v0.0.0-20221116044647-bc3834ca7abd // indirect
 	sigs.k8s.io/structured-merge-diff/v4 v4.4.1 // indirect
 	sigs.k8s.io/yaml v1.4.0 // indirect
@@ -120,3 +120,9 @@ replace github.com/openstack-k8s-operators/openstack-operator/apis => ./apis
 // mschuppert: map to latest commit from release-4.13 tag
 // must consistent within modules and service operators
 replace github.com/openshift/api => github.com/openshift/api v0.0.0-20230414143018-3367bc7e6ac7 //allow-merging
+
+replace github.com/openstack-k8s-operators/ovn-operator/api => github.com/olliewalsh/ovn-operator/api v0.0.0-20240307130440-fb781319c0b4
+
+replace github.com/openstack-k8s-operators/neutron-operator/api => github.com/olliewalsh/neutron-operator/api v0.0.0-20240307130627-1144bf183a87
+
+replace github.com/openstack-k8s-operators/dataplane-operator/api => github.com/olliewalsh/dataplane-operator/api v0.0.0-20240308171854-1a85e6b4f0dd

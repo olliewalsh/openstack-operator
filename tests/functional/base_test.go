@@ -46,6 +46,7 @@ type Names struct {
 	RoleBindingName           types.NamespacedName
 	RootCAPublicName          types.NamespacedName
 	RootCAInternalName        types.NamespacedName
+	RootCAOvnDbName           types.NamespacedName
 	SelfSignedIssuerName      types.NamespacedName
 	CABundleName              types.NamespacedName
 	OpenStackClientName       types.NamespacedName
@@ -65,6 +66,9 @@ func CreateNames(openstackControlplaneName types.NamespacedName) Names {
 		RootCAInternalName: types.NamespacedName{
 			Namespace: openstackControlplaneName.Namespace,
 			Name:      "rootca-internal"},
+		RootCAOvnDbName: types.NamespacedName{
+			Namespace: openstackControlplaneName.Namespace,
+			Name:      "rootca-ovndbs"},
 		SelfSignedIssuerName: types.NamespacedName{
 			Namespace: openstackControlplaneName.Namespace,
 			Name:      "selfsigned-issuer"},

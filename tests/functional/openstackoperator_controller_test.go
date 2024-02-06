@@ -49,6 +49,7 @@ var _ = Describe("OpenStackOperator controller", func() {
 		// it is not used, just to make sure reconcile proceeds and creates the ca-bundle.
 		DeferCleanup(k8sClient.Delete, ctx, CreatePublicCACertSecret(names.RootCAPublicName))
 		DeferCleanup(k8sClient.Delete, ctx, CreateInternalCACertSecret(names.RootCAInternalName))
+		DeferCleanup(k8sClient.Delete, ctx, CreateInternalCACertSecret(names.RootCAOvnDbName))
 		// create cert secrets for galera instances
 		DeferCleanup(k8sClient.Delete, ctx, th.CreateCertSecret(names.DBCertName))
 		DeferCleanup(k8sClient.Delete, ctx, th.CreateCertSecret(names.DBCell1CertName))
@@ -97,7 +98,7 @@ var _ = Describe("OpenStackOperator controller", func() {
 			}, timeout, interval).Should(Succeed())
 		})
 
-		It("should create selfsigned issuer and public+internal CA and issuer", func() {
+		It("should create selfsigned issuer and public+internal+ovndb CA and issuer", func() {
 			OSCtlplane := GetOpenStackControlPlane(names.OpenStackControlplaneName)
 
 			Expect(OSCtlplane.Spec.TLS.Endpoint[service.EndpointPublic].Enabled).Should(BeTrue())
@@ -108,7 +109,7 @@ var _ = Describe("OpenStackOperator controller", func() {
 				crtmgr.GetIssuer(names.SelfSignedIssuerName)
 			}, timeout, interval).Should(Succeed())
 
-			// creates public+internal root CA and issuer
+			// creates public+internal+ovndb root CA and issuer
 			Eventually(func(g Gomega) {
 				// ca cert
 				cert := crtmgr.GetCert(names.RootCAPublicName)
@@ -135,6 +136,20 @@ var _ = Describe("OpenStackOperator controller", func() {
 				issuer := crtmgr.GetIssuer(names.RootCAInternalName)
 				g.Expect(issuer).Should(Not(BeNil()))
 				g.Expect(issuer.Spec.CA.SecretName).Should(Equal(names.RootCAInternalName.Name))
+
+			}, timeout, interval).Should(Succeed())
+			Eventually(func(g Gomega) {
+				// ca cert
+				cert := crtmgr.GetCert(names.RootCAOvnDbName)
+				g.Expect(cert).Should(Not(BeNil()))
+				g.Expect(cert.Spec.CommonName).Should(Equal(names.RootCAOvnDbName.Name))
+				g.Expect(cert.Spec.IsCA).Should(BeTrue())
+				g.Expect(cert.Spec.IssuerRef.Name).Should(Equal(names.SelfSignedIssuerName.Name))
+				g.Expect(cert.Spec.SecretName).Should(Equal(names.RootCAOvnDbName.Name))
+				// issuer
+				issuer := crtmgr.GetIssuer(names.RootCAOvnDbName)
+				g.Expect(issuer).Should(Not(BeNil()))
+				g.Expect(issuer.Spec.CA.SecretName).Should(Equal(names.RootCAOvnDbName.Name))
 
 			}, timeout, interval).Should(Succeed())
 		})

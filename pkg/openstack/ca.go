@@ -27,6 +27,10 @@ import (
 	ctrl "sigs.k8s.io/controller-runtime"
 )
 
+const (
+	OvnDbCaName = tls.DefaultCAPrefix + "ovndbs"
+)
+
 // ReconcileCAs -
 func ReconcileCAs(ctx context.Context, instance *corev1.OpenStackControlPlane, helper *helper.Helper) (ctrl.Result, error) {
 	Log := GetLogger(ctx)
@@ -137,6 +141,41 @@ func ReconcileCAs(ctx context.Context, instance *corev1.OpenStackControlPlane, h
 
 		instance.Status.TLS.CAList = append(instance.Status.TLS.CAList, status)
 	}
+
+	// Create OVN DB CA
+	{
+		labels := map[string]string{}
+		labels[certmanager.RootCAIssuerOvnDBLabel] = ""
+		caName := OvnDbCaName
+		// always create a root CA and issuer for the endpoint as we can
+		// not expect that all services are yet configured to be provided with
+		// a custom secret holding the cert/private key
+		caCert, ctrlResult, err := createRootCACertAndIssuer(
+			ctx,
+			instance,
+			helper,
+			issuerReq,
+			caName,
+			labels,
+		)
+		if err != nil {
+			return ctrlResult, err
+		} else if (ctrlResult != ctrl.Result{}) {
+			return ctrlResult, nil
+		}
+
+		ovnDbCaBundle := newBundle()
+		err = ovnDbCaBundle.getCertsFromPEM(caCert)
+		if err != nil {
+			return ctrl.Result{}, err
+		}
+		status := corev1.TLSCAStatus{
+			Name:    caName,
+			Expires: ovnDbCaBundle.certs[0].expire.Format(time.RFC3339),
+		}
+		instance.Status.TLS.CAList = append(instance.Status.TLS.CAList, status)
+	}
+
 	instance.Status.Conditions.MarkTrue(corev1.OpenStackControlPlaneCAReadyCondition, corev1.OpenStackControlPlaneCAReadyMessage)
 
 	// create/update combined CA secret
