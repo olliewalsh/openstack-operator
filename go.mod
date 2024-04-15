@@ -23,7 +23,7 @@ require (
 	github.com/openstack-k8s-operators/ironic-operator/api v0.3.1-0.20240408054123-cb7b79a22b47
 	github.com/openstack-k8s-operators/keystone-operator/api v0.3.1-0.20240402154848-e5f862707f49
 	github.com/openstack-k8s-operators/lib-common/modules/certmanager v0.0.0-20240409150851-9a336392d3b2
-	github.com/openstack-k8s-operators/lib-common/modules/common v0.3.1-0.20240409150851-9a336392d3b2
+	github.com/openstack-k8s-operators/lib-common/modules/common v0.3.1-0.20240412091425-bb628ded5eb8
 	github.com/openstack-k8s-operators/lib-common/modules/test v0.3.1-0.20240409150851-9a336392d3b2
 	github.com/openstack-k8s-operators/manila-operator/api v0.3.1-0.20240403143013-74e2f3cc4015
 	github.com/openstack-k8s-operators/mariadb-operator/api v0.3.1-0.20240409152037-91b5c56dfc4a
@@ -83,7 +83,7 @@ require (
 	github.com/modern-go/reflect2 v1.0.2 // indirect
 	github.com/munnerz/goautoneg v0.0.0-20191010083416-a7dc8b61c822 // indirect
 	github.com/openstack-k8s-operators/lib-common/modules/openstack v0.3.1-0.20240409150851-9a336392d3b2 // indirect
-	github.com/openstack-k8s-operators/lib-common/modules/storage v0.3.1-0.20240409150851-9a336392d3b2 // indirect
+	github.com/openstack-k8s-operators/lib-common/modules/storage v0.3.1-0.20240412091425-bb628ded5eb8 // indirect
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/prometheus/client_golang v1.18.0 // indirect
 	github.com/prometheus/client_model v0.5.0 // indirect
@@ -128,3 +128,5 @@ replace github.com/openshift/api => github.com/openshift/api v0.0.0-202304141430
 
 // custom RabbitmqClusterSpecCore for OpenStackControlplane (v2.6.0_patches_tag)
 replace github.com/rabbitmq/cluster-operator/v2 => github.com/openstack-k8s-operators/rabbitmq-cluster-operator/v2 v2.6.1-0.20240313124519-961a0ee8bf7f //allow-merging
+
+replace github.com/openstack-k8s-operators/dataplane-operator/api => github.com/olliewalsh/dataplane-operator/api v0.0.0-20240416000529-c9b3dc0eb2d0
