@@ -84,6 +84,8 @@ github.com/modern-go/reflect2 v1.0.2 h1:xBagoLtFs94CBntxluKeaWgTMpvLxC4ur3nMaC9G
 github.com/modern-go/reflect2 v1.0.2/go.mod h1:yWuevngMOJpCy52FWWMvUC8ws7m/LJsjYzDa0/r8luk=
 github.com/munnerz/goautoneg v0.0.0-20191010083416-a7dc8b61c822 h1:C3w9PqII01/Oq1c1nUAm88MOHcQC9l5mIlSMApZMrHA=
 github.com/munnerz/goautoneg v0.0.0-20191010083416-a7dc8b61c822/go.mod h1:+n7T8mK8HuQTcFwEeznm/DIxMOiR9yIdICNftLE1DvQ=
+github.com/olliewalsh/lib-common/modules/common v0.0.0-20240708211608-83ef5d3b0c7d h1:98ifgm85LV+ku4r81KGTuufF4C8dLUexgEArXrh+Coc=
+github.com/olliewalsh/lib-common/modules/common v0.0.0-20240708211608-83ef5d3b0c7d/go.mod h1:k9KuWN2LBtLbKHgcyh/0lrwk3Kr0cOAhiR3hi/mrwOQ=
 github.com/onsi/ginkgo/v2 v2.19.0 h1:9Cnnf7UHo57Hy3k6/m5k3dRfGTMXGvxhHFvkDTCTpvA=
 github.com/onsi/ginkgo/v2 v2.19.0/go.mod h1:rlwLi9PilAFJ8jCg9UE1QP6VBpd6/xj3SRC0d6TU0To=
 github.com/onsi/gomega v1.33.1 h1:dsYjIxxSR755MDmKVsaFQTE22ChNBcuuTWgkUDSubOk=
@@ -108,8 +110,6 @@ github.com/openstack-k8s-operators/ironic-operator/api v0.3.1-0.20240704220915-7
 github.com/openstack-k8s-operators/ironic-operator/api v0.3.1-0.20240704220915-746cf7c339c5/go.mod h1:t9jIbObwq9/kswhmUcdZBUH+L9xLtm0+5flPcPSBH8M=
 github.com/openstack-k8s-operators/keystone-operator/api v0.3.1-0.20240704220917-e65444cf5f26 h1:rPemtm9yElXfCD3uKvUQWwxdPwpEXhJpUq5cxyKnQR4=
 github.com/openstack-k8s-operators/keystone-operator/api v0.3.1-0.20240704220917-e65444cf5f26/go.mod h1:Pg+s5VIUvZNec600X7GtlGTAUD2vafi9GZ7V0guaujI=
-github.com/openstack-k8s-operators/lib-common/modules/common v0.3.1-0.20240624132705-6c8da3c0bbfd h1:ZlZW1W+IEDNN5Vz5HG3iyQWn5kk3omno4i6J3snwy3w=
-github.com/openstack-k8s-operators/lib-common/modules/common v0.3.1-0.20240624132705-6c8da3c0bbfd/go.mod h1:k9KuWN2LBtLbKHgcyh/0lrwk3Kr0cOAhiR3hi/mrwOQ=
 github.com/openstack-k8s-operators/lib-common/modules/openstack v0.3.1-0.20240624132705-6c8da3c0bbfd h1:solheCgtkDXK3AKTwZYmwoeQqXiwjB8K6T/YuxDjNDc=
 github.com/openstack-k8s-operators/lib-common/modules/openstack v0.3.1-0.20240624132705-6c8da3c0bbfd/go.mod h1:zuPcZ5Kopr15AdfxvA0xqKIIGCZ0XbSe/0VHNKuvbEE=
 github.com/openstack-k8s-operators/lib-common/modules/storage v0.3.1-0.20240624132705-6c8da3c0bbfd h1:MY3MDe11c9R/kp0ALVeaWHIdRpbQh9Xs3ym/Z/KBBlU=
