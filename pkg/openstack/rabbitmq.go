@@ -259,6 +259,38 @@ func reconcileRabbitMQ(
 		},
 	}
 
+	// https://github.com/rabbitmq/cluster-operator/tree/d41c06dd43588e09b15c19e5bd78ed219baa0702/docs/examples/production-ready
+	// TODO:
+	// apiVersion: policy/v1
+	// kind: PodDisruptionBudget
+	// metadata:
+	//   name: production-ready-rabbitmq
+	// spec:
+	//   maxUnavailable: 1
+	//   selector:
+	//     matchLabels:
+	//       app.kubernetes.io/name: <rabbitmq.Name>
+	topologySpreadConstaints := []corev1.TopologySpreadConstraint{}
+	for _, topologyKey := range instance.Spec.TopologySpreadConfig.TopologyKeys {
+		topologySpreadConstaints = append(topologySpreadConstaints, corev1.TopologySpreadConstraint{
+			MaxSkew:           1,
+			TopologyKey:       topologyKey,
+			WhenUnsatisfiable: instance.Spec.TopologySpreadConfig.WhenUnsatisfiable,
+			LabelSelector: &metav1.LabelSelector{
+				MatchExpressions: []metav1.LabelSelectorRequirement{
+					{
+						Key:      "app.kubernetes.io/name",
+						Operator: metav1.LabelSelectorOpIn,
+						Values: []string{
+							rabbitmq.Name,
+						},
+					},
+				},
+			},
+		})
+	}
+	defaultStatefulSet.Spec.Template.Spec.TopologySpreadConstraints = topologySpreadConstaints
+
 	hostname := fmt.Sprintf("%s.%s.svc", name, instance.Namespace)
 	hostnameHeadless := fmt.Sprintf("%s-nodes.%s.svc", name, instance.Namespace)
 	hostnames := []string{
@@ -312,6 +344,7 @@ func reconcileRabbitMQ(
 
 	op, err := controllerutil.CreateOrPatch(ctx, helper.GetClient(), rabbitmq, func() error {
 
+		rabbitmq.Spec.Affinity = spec.Affinity
 		rabbitmq.Spec.Image = *version.Status.ContainerImages.RabbitmqImage
 		rabbitmq.Spec.Replicas = spec.Replicas
 		rabbitmq.Spec.Tolerations = spec.Tolerations
@@ -325,36 +358,6 @@ func reconcileRabbitMQ(
 		if spec.Resources != nil {
 			rabbitmq.Spec.Resources = spec.Resources
 			//spec.Resources.DeepCopyInto(rabbitmq.Spec.Resources)
-		}
-		if spec.Affinity != nil {
-			rabbitmq.Spec.Affinity = spec.Affinity
-			//spec.Affinity.DeepCopyInto(rabbitmq.Spec.Affinity)
-		} else {
-			// default anti affinity as in
-			// https://github.com/rabbitmq/cluster-operator/blob/11361d4201a55f457da7c1a2f69e75b2b0cfd069/docs/examples/pod-anti-affinity/rabbitmq.yaml
-			rabbitmq.Spec.Affinity = &corev1.Affinity{
-				PodAntiAffinity: &corev1.PodAntiAffinity{
-					PreferredDuringSchedulingIgnoredDuringExecution: []corev1.WeightedPodAffinityTerm{
-						{
-							Weight: 100,
-							PodAffinityTerm: corev1.PodAffinityTerm{
-								LabelSelector: &metav1.LabelSelector{
-									MatchExpressions: []metav1.LabelSelectorRequirement{
-										{
-											Key:      "app.kubernetes.io/name",
-											Operator: metav1.LabelSelectorOpIn,
-											Values: []string{
-												rabbitmq.Name,
-											},
-										},
-									},
-								},
-								TopologyKey: "kubernetes.io/hostname",
-							},
-						},
-					},
-				},
-			}
 		}
 
 		if rabbitmq.Spec.Persistence.StorageClassName == nil {

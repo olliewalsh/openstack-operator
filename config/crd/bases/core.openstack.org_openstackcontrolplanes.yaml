@@ -18151,6 +18151,21 @@ spec:
                         type: object
                     type: object
                 type: object
+              topologySpreadConfig:
+                properties:
+                  topologyKeys:
+                    default:
+                    - kubernetes.io/hostname
+                    items:
+                      type: string
+                    type: array
+                  whenUnsatisfiable:
+                    default: DoNotSchedule
+                    enum:
+                    - DoNotSchedule
+                    - ScheduleAnyway
+                    type: string
+                type: object
             required:
             - secret
             - storageClass

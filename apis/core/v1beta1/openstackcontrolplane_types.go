@@ -47,6 +47,7 @@ import (
 	telemetryv1 "github.com/openstack-k8s-operators/telemetry-operator/api/v1beta1"
 	rabbitmqv2 "github.com/rabbitmq/cluster-operator/v2/api/v1beta1"
 
+	corev1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
@@ -86,8 +87,14 @@ type OpenStackControlPlaneSpec struct {
 
 	// +kubebuilder:validation:Optional
 	// +operator-sdk:csv:customresourcedefinitions:type=spec
-	// NodeSelector to target subset of worker nodes running control plane services (currently only applies to KeystoneAPI and PlacementAPI)
+	// NodeSelector to target subset of worker nodes running control plane services
 	NodeSelector map[string]string `json:"nodeSelector,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	// +operator-sdk:csv:customresourcedefinitions:type=spec
+	// +kubebuild:default={topologyKeys: {"kubernetes.io/hostname"}, whenUnsatisfiable: "DoNotSchedule"}
+	// Configures TopologySpreadConstaints that control placement of control plane pods
+	TopologySpreadConfig TopologySpreadConfigSection `json:"topologySpreadConfig"`
 
 	// +kubebuilder:validation:Optional
 	// +operator-sdk:csv:customresourcedefinitions:type=spec
@@ -211,6 +218,18 @@ type OpenStackControlPlaneSpec struct {
 	// template Section, the globally defined ExtraMounts are ignored and
 	// overridden for the operator which has this section already.
 	ExtraMounts []OpenStackExtraVolMounts `json:"extraMounts,omitempty"`
+}
+
+// TopologySpreadSectionConfigSection defines the desired state of TopologySpreadConstraints
+type TopologySpreadConfigSection struct {
+	// +kubebuilder:validation:optional
+	// +kubebuilder:default={"kubernetes.io/hostname"}
+	// List of node labels used to define topology domains e.g {"kubernetes.io/hostname", "topology.kubernetes.io/zone"}
+	TopologyKeys []string `json:"topologyKeys,omitempty"`
+	// +kubebuilder:validation:optional
+	// +kubebuilder:validation:Enum={DoNotSchedule,ScheduleAnyway}
+	// +kubebuilder:default="DoNotSchedule"
+	WhenUnsatisfiable corev1.UnsatisfiableConstraintAction `json:"whenUnsatisfiable,omitempty"`
 }
 
 // TLSSection defines the desired state of TLS configuration
