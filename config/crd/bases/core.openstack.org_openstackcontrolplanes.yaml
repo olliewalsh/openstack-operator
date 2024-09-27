@@ -11723,6 +11723,8 @@ spec:
                               default: NB
                               pattern: ^NB|SB$
                               type: string
+                            disableNonTLSListeners:
+                              type: boolean
                             electionTimer:
                               default: 10000
                               format: int32
@@ -11795,6 +11797,7 @@ spec:
                           required:
                           - dbType
                           - storageRequest
+                          - tls
                           type: object
                         type: object
                       ovnNorthd:

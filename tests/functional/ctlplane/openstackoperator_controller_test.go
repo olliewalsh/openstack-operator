@@ -1608,7 +1608,6 @@ var _ = Describe("OpenStackOperator controller", func() {
 	When("A OVN OpenStackControlplane instance is created", func() {
 		BeforeEach(func() {
 			spec := GetDefaultOpenStackControlPlaneSpec()
-			spec["tls"] = GetTLSPublicSpec()
 			spec["ovn"] = map[string]interface{}{
 				"enabled": true,
 				"template": map[string]interface{}{

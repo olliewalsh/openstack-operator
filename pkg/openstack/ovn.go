@@ -98,12 +98,13 @@ func ReconcileOVNDbClusters(ctx context.Context, instance *corev1beta1.OpenStack
 				return false, err
 			}
 		}
-		if instance.Spec.TLS.PodLevel.Enabled {
-			dbcluster.TLS = OVNDBCluster.Spec.TLS
-		}
+
+		dbcluster.DisableNonTLSListeners = instance.Spec.TLS.PodLevel.Enabled
+
+		dbcluster.TLS = OVNDBCluster.Spec.TLS
 		dbcluster.TLS.CaBundleSecretName = instance.Status.TLS.CaBundleSecretName
 
-		if instance.Spec.TLS.PodLevel.Enabled {
+		if true {
 			// create certificate for ovndbclusters
 			certRequest := certmanager.CertificateRequest{
 				IssuerName: instance.GetOvnIssuer(),
