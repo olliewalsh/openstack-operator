@@ -52,6 +52,7 @@ func ReconcileOpenStackClient(ctx context.Context, instance *corev1.OpenStackCon
 		instance.Spec.OpenStackClient.Template.DeepCopyInto(&openstackclient.Spec.OpenStackClientSpecCore)
 
 		openstackclient.Spec.ContainerImage = *version.Status.ContainerImages.OpenstackClientImage
+		openstackclient.Spec.NodeSelector = instance.Spec.NodeSelector
 
 		if instance.Spec.TLS.Ingress.Enabled || instance.Spec.TLS.PodLevel.Enabled {
 			openstackclient.Spec.Ca.CaBundleSecretName = tls.CABundleSecret
