@@ -168,9 +168,14 @@ func reconcileGalera(
 		return galeraReady, nil
 	}
 
+	if spec.NodeSelector == nil {
+		spec.NodeSelector = instance.Spec.NodeSelector
+	}
+
 	Log.Info("Reconciling Galera", "Galera.Namespace", instance.Namespace, "Galera.Name", name)
 	op, err := controllerutil.CreateOrPatch(ctx, helper.GetClient(), galera, func() error {
 		spec.DeepCopyInto(&galera.Spec.GaleraSpecCore)
+		galera.Spec.NodeSelector = spec.NodeSelector
 		galera.Spec.ContainerImage = *version.Status.ContainerImages.MariadbImage
 		err := controllerutil.SetControllerReference(helper.GetBeforeObject(), galera, helper.GetScheme())
 		if err != nil {
