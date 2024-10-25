@@ -101,6 +101,9 @@ func ReconcileBarbican(ctx context.Context, instance *corev1beta1.OpenStackContr
 		instance.Spec.Barbican.Template.BarbicanAPI.TLS.API.Public.SecretName = endpointDetails.GetEndptCertSecret(service.EndpointPublic)
 		instance.Spec.Barbican.Template.BarbicanAPI.TLS.API.Internal.SecretName = endpointDetails.GetEndptCertSecret(service.EndpointInternal)
 	}
+	if instance.Spec.Barbican.Template.NodeSelector == nil {
+		instance.Spec.Barbican.Template.NodeSelector = instance.Spec.NodeSelector
+	}
 
 	helper.GetLogger().Info("Reconciling Barbican", "Barbican.Namespace", instance.Namespace, "Barbican.Name", "barbican")
 	op, err := controllerutil.CreateOrPatch(ctx, helper.GetClient(), barbican, func() error {
@@ -108,6 +111,7 @@ func ReconcileBarbican(ctx context.Context, instance *corev1beta1.OpenStackContr
 		instance.Spec.Barbican.Template.BarbicanAPI.DeepCopyInto(&barbican.Spec.BarbicanAPI.BarbicanAPITemplateCore)
 		instance.Spec.Barbican.Template.BarbicanWorker.DeepCopyInto(&barbican.Spec.BarbicanWorker.BarbicanWorkerTemplateCore)
 		instance.Spec.Barbican.Template.BarbicanKeystoneListener.DeepCopyInto(&barbican.Spec.BarbicanKeystoneListener.BarbicanKeystoneListenerTemplateCore)
+		barbican.Spec.NodeSelector = instance.Spec.Barbican.Template.NodeSelector
 
 		barbican.Spec.BarbicanAPI.ContainerImage = *version.Status.ContainerImages.BarbicanAPIImage
 		barbican.Spec.BarbicanWorker.ContainerImage = *version.Status.ContainerImages.BarbicanWorkerImage
@@ -119,9 +123,6 @@ func ReconcileBarbican(ctx context.Context, instance *corev1beta1.OpenStackContr
 		}
 		if barbican.Spec.Secret == "" {
 			barbican.Spec.Secret = instance.Spec.Secret
-		}
-		if barbican.Spec.NodeSelector == nil && instance.Spec.NodeSelector != nil {
-			barbican.Spec.NodeSelector = instance.Spec.NodeSelector
 		}
 		if barbican.Spec.DatabaseInstance == "" {
 			// barbican.Spec.DatabaseInstance = instance.Name // name of MariaDB we create here

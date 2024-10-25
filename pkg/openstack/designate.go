@@ -109,6 +109,10 @@ func ReconcileDesignate(ctx context.Context, instance *corev1beta1.OpenStackCont
 		instance.Spec.Designate.Template.DesignateAPI.TLS.API.Internal.SecretName = endpointDetails.GetEndptCertSecret(service.EndpointInternal)
 	}
 
+	if instance.Spec.Designate.Template.NodeSelector == nil {
+		instance.Spec.Designate.Template.NodeSelector = instance.Spec.NodeSelector
+	}
+
 	helper.GetLogger().Info("Reconciling Designate", "Designate.Namespace", instance.Namespace, "Designate.Name", "designate")
 	op, err := controllerutil.CreateOrPatch(ctx, helper.GetClient(), designate, func() error {
 		// FIXME: the designate structs need some rework (images should be at the top level, not in the sub structs)
@@ -131,6 +135,7 @@ func ReconcileDesignate(ctx context.Context, instance *corev1beta1.OpenStackCont
 		// Bind9
 		instance.Spec.Designate.Template.DesignateBackendbind9.DesignateBackendbind9SpecBase.DeepCopyInto(&designate.Spec.DesignateBackendbind9.DesignateBackendbind9SpecBase)
 		instance.Spec.Designate.Template.DesignateBackendbind9.DesignateServiceTemplateCore.DeepCopyInto(&designate.Spec.DesignateBackendbind9.DesignateServiceTemplateCore)
+		designate.Spec.NodeSelector = instance.Spec.Designate.Template.NodeSelector
 
 		designate.Spec.DesignateAPI.ContainerImage = *version.Status.ContainerImages.DesignateAPIImage
 		designate.Spec.DesignateCentral.ContainerImage = *version.Status.ContainerImages.DesignateCentralImage
@@ -142,9 +147,6 @@ func ReconcileDesignate(ctx context.Context, instance *corev1beta1.OpenStackCont
 
 		if designate.Spec.Secret == "" {
 			designate.Spec.Secret = instance.Spec.Secret
-		}
-		if designate.Spec.NodeSelector == nil && instance.Spec.NodeSelector != nil {
-			designate.Spec.NodeSelector = instance.Spec.NodeSelector
 		}
 		if designate.Spec.DatabaseInstance == "" {
 			//designate.Spec.DatabaseInstance = instance.Name // name of MariaDB we create here

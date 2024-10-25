@@ -118,12 +118,17 @@ func ReconcileCinder(ctx context.Context, instance *corev1beta1.OpenStackControl
 		instance.Spec.Cinder.Template.CinderAPI.TLS.API.Internal.SecretName = endpointDetails.GetEndptCertSecret(service.EndpointInternal)
 	}
 
+	if instance.Spec.Cinder.Template.NodeSelector == nil {
+		instance.Spec.Cinder.Template.NodeSelector = instance.Spec.NodeSelector
+	}
+
 	Log.Info("Reconciling Cinder", "Cinder.Namespace", instance.Namespace, "Cinder.Name", cinderName)
 	op, err := controllerutil.CreateOrPatch(ctx, helper.GetClient(), cinder, func() error {
 		instance.Spec.Cinder.Template.CinderSpecBase.DeepCopyInto(&cinder.Spec.CinderSpecBase)
 		instance.Spec.Cinder.Template.CinderAPI.DeepCopyInto(&cinder.Spec.CinderAPI.CinderAPITemplateCore)
 		instance.Spec.Cinder.Template.CinderScheduler.DeepCopyInto(&cinder.Spec.CinderScheduler.CinderSchedulerTemplateCore)
 		instance.Spec.Cinder.Template.CinderBackup.DeepCopyInto(&cinder.Spec.CinderBackup.CinderBackupTemplateCore)
+		cinder.Spec.NodeSelector = instance.Spec.Cinder.Template.NodeSelector
 
 		cinder.Spec.CinderAPI.ContainerImage = *version.Status.ContainerImages.CinderAPIImage
 		cinder.Spec.CinderScheduler.ContainerImage = *version.Status.ContainerImages.CinderSchedulerImage
@@ -150,9 +155,6 @@ func ReconcileCinder(ctx context.Context, instance *corev1beta1.OpenStackControl
 
 		if cinder.Spec.Secret == "" {
 			cinder.Spec.Secret = instance.Spec.Secret
-		}
-		if cinder.Spec.NodeSelector == nil && instance.Spec.NodeSelector != nil {
-			cinder.Spec.NodeSelector = instance.Spec.NodeSelector
 		}
 		if cinder.Spec.DatabaseInstance == "" {
 			//cinder.Spec.DatabaseInstance = instance.Name // name of MariaDB we create here
