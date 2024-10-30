@@ -195,7 +195,7 @@ func (d *Deployer) ConditionalDeploy(
 
 	}
 
-	var ansibleCondition *batchv1.JobCondition
+	var ansibleCondition batchv1.JobCondition
 	if nsConditions.IsFalse(readyCondition) {
 		var ansibleEE *batchv1.Job
 		_, labelSelector := dataplaneutil.GetAnsibleExecutionNameAndLabels(&foundService, d.Deployment.Name, d.NodeSet.Name)
@@ -220,18 +220,11 @@ func (d *Deployer) ConditionalDeploy(
 			nsConditions.Set(condition.TrueCondition(
 				readyCondition,
 				readyMessage))
-		} else if ansibleEE.Status.Active > 0 {
-			log.Info(fmt.Sprintf("AnsibleEE job is not yet completed: Execution: %s, Active pods: %d", ansibleEE.Name, ansibleEE.Status.Active))
-			nsConditions.Set(condition.FalseCondition(
-				readyCondition,
-				condition.RequestedReason,
-				condition.SeverityInfo,
-				readyWaitingMessage))
-		} else if ansibleEE.Status.Failed > 0 {
+		} else if ansibleEE.Status.Failed > *ansibleEE.Spec.BackoffLimit {
 			errorMsg := fmt.Sprintf("execution.name %s execution.namespace %s failed pods: %d", ansibleEE.Name, ansibleEE.Namespace, ansibleEE.Status.Failed)
 			for _, condition := range ansibleEE.Status.Conditions {
 				if condition.Type == batchv1.JobFailed {
-					ansibleCondition = &condition
+					ansibleCondition = condition
 				}
 			}
 			if ansibleCondition.Reason == condition.JobReasonBackoffLimitExceeded {
@@ -245,6 +238,13 @@ func (d *Deployer) ConditionalDeploy(
 				condition.SeverityError,
 				readyErrorMessage,
 				err.Error()))
+		} else {
+			log.Info(fmt.Sprintf("AnsibleEE job is not yet completed: Execution: %s, Active pods: %d, Failed pods: %d", ansibleEE.Name, ansibleEE.Status.Active, ansibleEE.Status.Failed))
+			nsConditions.Set(condition.FalseCondition(
+				readyCondition,
+				condition.RequestedReason,
+				condition.SeverityInfo,
+				readyWaitingMessage))
 		}
 	}
 	d.Status.NodeSetConditions[d.NodeSet.Name] = nsConditions
