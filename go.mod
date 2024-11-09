@@ -130,3 +130,9 @@ replace github.com/rabbitmq/cluster-operator/v2 => github.com/openstack-k8s-oper
 replace github.com/openstack-k8s-operators/barbican-operator/api => github.com/olliewalsh/barbican-operator/api v0.0.0-20241108164955-3a90b194bbbe
 
 replace github.com/openstack-k8s-operators/mariadb-operator/api => github.com/olliewalsh/mariadb-operator/api v0.0.0-20241108164045-8c31810835c5
+
+replace github.com/openstack-k8s-operators/cinder-operator/api => github.com/olliewalsh/cinder-operator/api v0.0.0-20241108234233-4f8267f429b6
+
+replace github.com/openstack-k8s-operators/neutron-operator/api => github.com/olliewalsh/neutron-operator/api v0.0.0-20241108235209-1b55a77319da
+
+replace github.com/openstack-k8s-operators/placement-operator/api => github.com/olliewalsh/placement-operator/api v0.0.0-20241108235740-7b3abdf3290a
