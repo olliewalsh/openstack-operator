@@ -5,7 +5,7 @@ commands:
   - script: |
       echo "Checking all running pods have new nodeselector"
       EXPECTED_NODE_SELECTOR="kubernetes.io/os:linux"
-      BAD_OR_MISSING_NODE_SELECTOR=$(oc get pods -n $NAMESPACE -l skip_nodeselector_test!=true --field-selector=status.phase=Running -o=go-template --template='{{ range .items }}{{ .metadata.name}}: {{ .spec.nodeSelector }}{{"\n"}}{{ end }}' | sed -e '\!map\['"$EXPECTED_NODE_SELECTOR"'\]$!d')
+      BAD_OR_MISSING_NODE_SELECTOR=$(oc get pods -n $NAMESPACE -l service!=dnsmasq --field-selector=status.phase=Running -o=go-template --template='{{ range .items }}{{ .metadata.name}}: {{ .spec.nodeSelector }}{{"\n"}}{{ end }}' | sed -e '\!map\['"$EXPECTED_NODE_SELECTOR"'\]$!d')
       BAD_OR_MISSING_NODE_SELECTOR_COUNT=$(echo "$BAD_OR_MISSING_NODE_SELECTOR" | wc -l)
       if [ $BAD_OR_MISSING_NODE_SELECTOR_COUNT -ne 0 ]; then
         echo "Found $BAD_OR_MISSING_NODE_SELECTOR_COUNT pods with bad or missing nodeselector:"
