@@ -138,3 +138,5 @@ replace github.com/openstack-k8s-operators/neutron-operator/api => github.com/ol
 replace github.com/openstack-k8s-operators/placement-operator/api => github.com/olliewalsh/placement-operator/api v0.0.0-20241108235740-7b3abdf3290a
 
 replace github.com/openstack-k8s-operators/glance-operator/api => github.com/olliewalsh/glance-operator/api v0.0.0-20241109142651-115049ea7939
+
+replace github.com/openstack-k8s-operators/nova-operator/api => github.com/olliewalsh/nova-operator/api v0.0.0-20241109210723-f641861a65bf
