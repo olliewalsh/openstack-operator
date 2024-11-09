@@ -41,6 +41,10 @@ func ReconcilePlacementAPI(ctx context.Context, instance *corev1beta1.OpenStackC
 		instance.Spec.Placement.Template = &placementv1.PlacementAPISpecCore{}
 	}
 
+	if instance.Spec.Placement.Template.NodeSelector == nil {
+		instance.Spec.Placement.Template.NodeSelector = instance.Spec.NodeSelector
+	}
+
 	// add selector to service overrides
 	for _, endpointType := range []service.Endpoint{service.EndpointPublic, service.EndpointInternal} {
 		if instance.Spec.Placement.Template.Override.Service == nil {
