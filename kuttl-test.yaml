@@ -20,6 +20,8 @@ commands:
   - command: oc apply -n openstack-kuttl-tests -f https://raw.githubusercontent.com/openstack-k8s-operators/infra-operator/main/config/samples/network_v1beta1_netconfig.yaml
   - command: oc apply -n openstack-kuttl-tests -f https://raw.githubusercontent.com/openstack-k8s-operators/infra-operator/main/config/samples/network_v1beta1_dnsmasq.yaml
   - script: |
+      # Ignore all pre-existing pods in node_selector tests
+      oc label pods -n openstack-kuttl-tests skip_nodeselector_test=true
       if [ ! -f ansibleee-ssh-key-id_rsa ]; then
           ssh-keygen -f ansibleee-ssh-key-id_rsa -N "" -t rsa -b 4096
       fi
