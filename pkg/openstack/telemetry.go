@@ -58,6 +58,11 @@ func ReconcileTelemetry(ctx context.Context, instance *corev1beta1.OpenStackCont
 		instance.Spec.Telemetry.Template = &telemetryv1.TelemetrySpecCore{}
 	}
 
+	// TODO
+	//if instance.Spec.Telemetry.Template.NodeSelector == nil {
+	//        instance.Spec.Telemetry.Template.NodeSelector = instance.Spec.NodeSelector
+	//}
+
 	if err := helper.GetClient().Get(ctx, types.NamespacedName{Name: "telemetry", Namespace: instance.Namespace}, telemetry); err != nil {
 		if !k8s_errors.IsNotFound(err) {
 			return ctrl.Result{}, err
