@@ -144,3 +144,5 @@ replace github.com/openstack-k8s-operators/nova-operator/api => github.com/ollie
 replace github.com/openstack-k8s-operators/swift-operator/api => github.com/olliewalsh/swift-operator/api v0.0.0-20241109234654-70db68b30c67
 
 replace github.com/openstack-k8s-operators/telemetry-operator/api => github.com/olliewalsh/telemetry-operator/api v0.0.0-20241109232514-7c5fd383504f
+
+replace github.com/openstack-k8s-operators/infra-operator/apis => github.com/olliewalsh/infra-operator/apis v0.0.0-20241110004118-cb441c23ae32

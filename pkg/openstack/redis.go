@@ -73,11 +73,6 @@ func ReconcileRedis(
 		instance.Spec.Redis.Templates = ptr.To(map[string]redisv1.RedisSpecCore{})
 	}
 
-	// TODO
-	//if instance.Spec.Redis.Template.NodeSelector == nil {
-	//        instance.Spec.Redis.Template.NodeSelector = instance.Spec.NodeSelector
-	//}
-
 	for _, redis := range redises.Items {
 		for _, ref := range redis.GetOwnerReferences() {
 			// Check owner UID to ensure the redis instance is owned by this OpenStackControlPlane instance
@@ -222,6 +217,10 @@ func reconcileRedis(
 		}
 
 		tlsCert = certSecret.Name
+	}
+
+	if spec.NodeSelector == nil {
+		spec.NodeSelector = instance.Spec.NodeSelector
 	}
 
 	op, err := controllerutil.CreateOrPatch(ctx, helper.GetClient(), redis, func() error {

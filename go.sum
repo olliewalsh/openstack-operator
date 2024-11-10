@@ -100,6 +100,8 @@ github.com/olliewalsh/cinder-operator/api v0.0.0-20241108234233-4f8267f429b6 h1:
 github.com/olliewalsh/cinder-operator/api v0.0.0-20241108234233-4f8267f429b6/go.mod h1:kMK8lci+S0HNoaf+g2+PGKOF7Xkc2zW9XEmnf1RHhjI=
 github.com/olliewalsh/glance-operator/api v0.0.0-20241109142651-115049ea7939 h1:AsHzEzphN9GCiKKU1Tz2u6aYJViIk1EKZePmPc/W9fs=
 github.com/olliewalsh/glance-operator/api v0.0.0-20241109142651-115049ea7939/go.mod h1:aFpk2decP4vpiyyuLOGzeZEJI3ypIchjj7nGSjCy8xc=
+github.com/olliewalsh/infra-operator/apis v0.0.0-20241110004118-cb441c23ae32 h1:Bpq1UHfb7wkxEc+SOqu/Rg4aSjgS+1XRVbOvtkDHclI=
+github.com/olliewalsh/infra-operator/apis v0.0.0-20241110004118-cb441c23ae32/go.mod h1:bGlNN1grd0q0TmWLe9iEpE2y6AjblBoQ6IIQ5puFHtU=
 github.com/olliewalsh/mariadb-operator/api v0.0.0-20241108164045-8c31810835c5 h1:EOuhPNEOUlNQxvNZR4ErNDzkIQjI1NIIGaPRBxUXHp4=
 github.com/olliewalsh/mariadb-operator/api v0.0.0-20241108164045-8c31810835c5/go.mod h1:348EPtAdpE2LxHAH4bHdCMNP7HyX6DevwEsF9DQ0S2k=
 github.com/olliewalsh/neutron-operator/api v0.0.0-20241108235209-1b55a77319da h1:swZkyvqE8SFMbSnQF8+vqjrP6UM5ZeRAFF4omDkZgEw=
@@ -124,8 +126,6 @@ github.com/openstack-k8s-operators/heat-operator/api v0.5.1-0.20241112060409-5e9
 github.com/openstack-k8s-operators/heat-operator/api v0.5.1-0.20241112060409-5e91380094e6/go.mod h1:+CUPkPcR8P4wpTlURPPsE9AD1uNYvvk0JsoIn5JLADM=
 github.com/openstack-k8s-operators/horizon-operator/api v0.5.1-0.20241111212134-2ef2b1f3a054 h1:klf+aTLFv0M9HDJuvCi/xJeUIRJbTV/cbqAXCmmdK08=
 github.com/openstack-k8s-operators/horizon-operator/api v0.5.1-0.20241111212134-2ef2b1f3a054/go.mod h1:K+9VJLuFNps6fsMjqEJjIP5T/F4lLgoQclG4tu4y7KA=
-github.com/openstack-k8s-operators/infra-operator/apis v0.5.1-0.20241106062833-6ba8f6c612c7 h1:2NCYi2y2n/JvpFcOCo3Lnwoy7zOl6WCMDKc82+0Acvw=
-github.com/openstack-k8s-operators/infra-operator/apis v0.5.1-0.20241106062833-6ba8f6c612c7/go.mod h1:1khEYHcLFRF0wBT7bFM7IHTmY7u3eTxwowOvNY/A3qo=
 github.com/openstack-k8s-operators/ironic-operator/api v0.5.1-0.20241106034332-79154efb7555 h1:qnd7s6aq1ZzrQUYqqToQ6TnTQnLqbW63kMPW83LeSYE=
 github.com/openstack-k8s-operators/ironic-operator/api v0.5.1-0.20241106034332-79154efb7555/go.mod h1:G2+GeBF23/YqS1KvMtoSyfxOBMa+Gj3XaahLT5OG598=
 github.com/openstack-k8s-operators/keystone-operator/api v0.5.1-0.20241106094500-2e94eb1e34a5 h1:KejIMvM/Mwb9/L3nRfCp9Zb9gZhnko3SJT4qnLEOsFI=
