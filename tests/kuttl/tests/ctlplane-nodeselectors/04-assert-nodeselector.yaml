@@ -1,6 +1,5 @@
 apiVersion: kuttl.dev/v1beta1
 kind: TestAssert
-timeout: 30
 commands:
   - script: |
       echo "Checking all running pods have new nodeselector"
