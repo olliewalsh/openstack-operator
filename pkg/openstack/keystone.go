@@ -104,13 +104,12 @@ func ReconcileKeystoneAPI(ctx context.Context, instance *corev1beta1.OpenStackCo
 	}
 
 	if instance.Spec.Keystone.Template.NodeSelector == nil {
-		instance.Spec.Keystone.Template.NodeSelector = instance.Spec.NodeSelector
+		instance.Spec.Keystone.Template.NodeSelector = &instance.Spec.NodeSelector
 	}
 
 	Log.Info("Reconciling KeystoneAPI", "KeystoneAPI.Namespace", instance.Namespace, "KeystoneAPI.Name", "keystone")
 	op, err := controllerutil.CreateOrPatch(ctx, helper.GetClient(), keystoneAPI, func() error {
 		instance.Spec.Keystone.Template.DeepCopyInto(&keystoneAPI.Spec.KeystoneAPISpecCore)
-		keystoneAPI.Spec.NodeSelector = instance.Spec.Keystone.Template.NodeSelector
 
 		keystoneAPI.Spec.ContainerImage = *version.Status.ContainerImages.KeystoneAPIImage
 		if keystoneAPI.Spec.Secret == "" {
