@@ -138,4 +138,6 @@ replace github.com/openstack-k8s-operators/infra-operator/apis => github.com/oll
 
 replace github.com/openstack-k8s-operators/keystone-operator/api => github.com/olliewalsh/keystone-operator/api v0.0.0-20241112201350-a5fc41680bf5
 
-replace github.com/openstack-k8s-operators/designate-operator/api => github.com/olliewalsh/designate-operator/api v0.0.0-20241112221156-b062e9858579
+replace github.com/openstack-k8s-operators/designate-operator/api => github.com/olliewalsh/designate-operator/api v0.0.0-20241112232906-dcac93a51ef5
+
+replace github.com/openstack-k8s-operators/heat-operator/api => github.com/olliewalsh/heat-operator/api v0.0.0-20241112232952-288a19583a84
