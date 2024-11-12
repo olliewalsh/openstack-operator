@@ -137,3 +137,5 @@ replace github.com/openstack-k8s-operators/telemetry-operator/api => github.com/
 replace github.com/openstack-k8s-operators/infra-operator/apis => github.com/olliewalsh/infra-operator/apis v0.0.0-20241110004118-cb441c23ae32
 
 replace github.com/openstack-k8s-operators/keystone-operator/api => github.com/olliewalsh/keystone-operator/api v0.0.0-20241112201350-a5fc41680bf5
+
+replace github.com/openstack-k8s-operators/designate-operator/api => github.com/olliewalsh/designate-operator/api v0.0.0-20241112221156-b062e9858579

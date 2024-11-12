@@ -110,7 +110,7 @@ func ReconcileDesignate(ctx context.Context, instance *corev1beta1.OpenStackCont
 	}
 
 	if instance.Spec.Designate.Template.NodeSelector == nil {
-		instance.Spec.Designate.Template.NodeSelector = instance.Spec.NodeSelector
+		instance.Spec.Designate.Template.NodeSelector = &instance.Spec.NodeSelector
 	}
 
 	helper.GetLogger().Info("Reconciling Designate", "Designate.Namespace", instance.Namespace, "Designate.Name", "designate")
