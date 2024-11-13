@@ -15,6 +15,7 @@ package openstackclient
 import (
 	"context"
 	"fmt"
+	"slices"
 
 	env "github.com/openstack-k8s-operators/lib-common/modules/common/env"
 	"github.com/openstack-k8s-operators/lib-common/modules/common/helper"
@@ -28,12 +29,13 @@ import (
 )
 
 // ClientPodSpec func
-func ClientPodSpec(
+func SetClientPodSpec(
 	ctx context.Context,
 	instance *clientv1.OpenStackClient,
 	helper *helper.Helper,
 	configHash string,
-) corev1.PodSpec {
+	podSpec *corev1.PodSpec,
+) {
 	envVars := map[string]env.Setter{}
 	envVars["OS_CLOUD"] = env.SetValue("default")
 	envVars["CONFIG_HASH"] = env.SetValue(configHash)
@@ -60,38 +62,63 @@ func ClientPodSpec(
 		volumeMounts = append(volumeMounts, instance.Spec.CreateVolumeMounts(nil)...)
 	}
 
-	podSpec := corev1.PodSpec{
-		TerminationGracePeriodSeconds: ptr.To[int64](0),
-		ServiceAccountName:            instance.RbacResourceName(),
-		Volumes:                       volumes,
-		Containers: []corev1.Container{
+	podSpec.TerminationGracePeriodSeconds = ptr.To[int64](0)
+	podSpec.ServiceAccountName = instance.RbacResourceName()
+	for _, volume := range volumes {
+		idx := slices.IndexFunc(podSpec.Volumes, func(v corev1.Volume) bool {
+			return v.Name == volume.Name
+		})
+		if idx == -1 {
+			podSpec.Volumes = append(podSpec.Volumes, volume)
+		} else {
+			podSpec.Volumes[idx] = volume
+		}
+	}
+
+	if len(podSpec.Containers) < 1 {
+		podSpec.Containers = []corev1.Container{
 			{
-				Name:    "openstackclient",
-				Image:   instance.Spec.ContainerImage,
-				Command: []string{"/bin/sleep"},
-				Args:    []string{"infinity"},
-				SecurityContext: &corev1.SecurityContext{
-					RunAsUser:                ptr.To[int64](42401),
-					RunAsGroup:               ptr.To[int64](42401),
-					RunAsNonRoot:             ptr.To(true),
-					AllowPrivilegeEscalation: ptr.To(false),
-					Capabilities: &corev1.Capabilities{
-						Drop: []corev1.Capability{
-							"ALL",
-						},
-					},
-				},
-				Env:          env.MergeEnvs([]corev1.EnvVar{}, envVars),
-				VolumeMounts: volumeMounts,
+				Name: "openstackclient",
 			},
-		},
+		}
+	}
+	podSpec.Containers[0].Name = "openstackclient"
+	podSpec.Containers[0].Image = instance.Spec.ContainerImage
+	podSpec.Containers[0].Command = []string{"/bin/sleep"}
+	podSpec.Containers[0].Args = []string{"infinity"}
+	if podSpec.Containers[0].SecurityContext == nil {
+		podSpec.Containers[0].SecurityContext = &corev1.SecurityContext{}
+	}
+	podSpec.Containers[0].SecurityContext.RunAsUser = ptr.To[int64](42401)
+	podSpec.Containers[0].SecurityContext.RunAsGroup = ptr.To[int64](42401)
+	podSpec.Containers[0].SecurityContext.RunAsNonRoot = ptr.To(true)
+	podSpec.Containers[0].SecurityContext.AllowPrivilegeEscalation = ptr.To(false)
+	if podSpec.Containers[0].SecurityContext.Capabilities == nil {
+		podSpec.Containers[0].SecurityContext.Capabilities = &corev1.Capabilities{
+			Drop: []corev1.Capability{},
+		}
+	}
+	{
+		idx := slices.Index(podSpec.Containers[0].SecurityContext.Capabilities.Drop, "ALL")
+		if idx == -1 {
+			podSpec.Containers[0].SecurityContext.Capabilities.Drop = append(podSpec.Containers[0].SecurityContext.Capabilities.Drop, "ALL")
+		}
+	}
+	podSpec.Containers[0].Env = env.MergeEnvs([]corev1.EnvVar{}, envVars)
+	for _, volumeMount := range volumeMounts {
+		idx := slices.Index(podSpec.Containers[0].VolumeMounts, volumeMount)
+		if idx == -1 {
+			podSpec.Containers[0].VolumeMounts = append(podSpec.Containers[0].VolumeMounts, volumeMount)
+		} else {
+			podSpec.Containers[0].VolumeMounts[idx] = volumeMount
+		}
 	}
 
-	if instance.Spec.NodeSelector != nil && len(*instance.Spec.NodeSelector) > 0 {
+	if instance.Spec.NodeSelector != nil {
 		podSpec.NodeSelector = *instance.Spec.NodeSelector
+	} else {
+		podSpec.NodeSelector = nil
 	}
-
-	return podSpec
 }
 
 func clientPodVolumeMounts() []corev1.VolumeMount {
