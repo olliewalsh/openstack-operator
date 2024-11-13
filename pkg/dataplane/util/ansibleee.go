@@ -103,10 +103,7 @@ func (a *EEJob) JobForOpenStackAnsibleEE(h *helper.Helper) (*batchv1.Job, error)
 			Args:            args,
 			Env:             a.Env,
 		}},
-	}
-
-	if a.NodeSelector != nil && len(a.NodeSelector) > 0 {
-		podSpec.NodeSelector = a.NodeSelector
+		NodeSelector: a.NodeSelector,
 	}
 
 	if a.DNSConfig != nil {
