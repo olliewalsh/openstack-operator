@@ -90,8 +90,8 @@ github.com/munnerz/goautoneg v0.0.0-20191010083416-a7dc8b61c822 h1:C3w9PqII01/Oq
 github.com/munnerz/goautoneg v0.0.0-20191010083416-a7dc8b61c822/go.mod h1:+n7T8mK8HuQTcFwEeznm/DIxMOiR9yIdICNftLE1DvQ=
 github.com/olliewalsh/barbican-operator/api v0.0.0-20241108164955-3a90b194bbbe h1:yQtqIHy8XCTnRNNKFuG/8Xi1LCWnufRyk6G/VYcKbI0=
 github.com/olliewalsh/barbican-operator/api v0.0.0-20241108164955-3a90b194bbbe/go.mod h1:NoS1vLy1V8aDsZzaydPzcjnjmXy5nO87BFsjiAZLlzc=
-github.com/olliewalsh/cinder-operator/api v0.0.0-20241108234233-4f8267f429b6 h1:7jyVRAuv2xmUpDqrGLo+FLxlGkn6cXKDyhS78kc6HCk=
-github.com/olliewalsh/cinder-operator/api v0.0.0-20241108234233-4f8267f429b6/go.mod h1:kMK8lci+S0HNoaf+g2+PGKOF7Xkc2zW9XEmnf1RHhjI=
+github.com/olliewalsh/cinder-operator/api v0.0.0-20241113223022-62c0ff0f8d20 h1:30f0vFQyi7VCGmhh9J5ikdslywLayeQmwNIkyXHBXmk=
+github.com/olliewalsh/cinder-operator/api v0.0.0-20241113223022-62c0ff0f8d20/go.mod h1:kMK8lci+S0HNoaf+g2+PGKOF7Xkc2zW9XEmnf1RHhjI=
 github.com/olliewalsh/designate-operator/api v0.0.0-20241112232906-dcac93a51ef5 h1:UWXY6CzpAI7NA5oM8CpzDMaGtc+y+acPaTwmsRAx41M=
 github.com/olliewalsh/designate-operator/api v0.0.0-20241112232906-dcac93a51ef5/go.mod h1:ylxf6O3dpBsem6lRdUOk7c7MVvci9Y+PgT2MzJczpQI=
 github.com/olliewalsh/glance-operator/api v0.0.0-20241109142651-115049ea7939 h1:AsHzEzphN9GCiKKU1Tz2u6aYJViIk1EKZePmPc/W9fs=
