@@ -51,7 +51,7 @@ func ReconcileHorizon(ctx context.Context, instance *corev1beta1.OpenStackContro
 	}
 
 	if instance.Spec.Horizon.Template.NodeSelector == nil {
-		instance.Spec.Horizon.Template.NodeSelector = instance.Spec.NodeSelector
+		instance.Spec.Horizon.Template.NodeSelector = &instance.Spec.NodeSelector
 	}
 
 	// add selector to service overrides

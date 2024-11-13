@@ -68,7 +68,7 @@ func ReconcileNova(ctx context.Context, instance *corev1beta1.OpenStackControlPl
 	}
 
 	if instance.Spec.Nova.Template.NodeSelector == nil {
-		instance.Spec.Nova.Template.NodeSelector = instance.Spec.NodeSelector
+		instance.Spec.Nova.Template.NodeSelector = &instance.Spec.NodeSelector
 	}
 
 	// When component services got created check if there is the need to create routes and certificates
