@@ -315,7 +315,11 @@ func reconcileRabbitMQ(
 	}
 
 	if spec.Override.StatefulSet.Spec.Template.Spec.NodeSelector == nil {
-		spec.Override.StatefulSet.Spec.Template.Spec.NodeSelector = instance.Spec.NodeSelector
+		if spec.NodeSelector != nil {
+			spec.Override.StatefulSet.Spec.Template.Spec.NodeSelector = *spec.NodeSelector
+		} else {
+			spec.Override.StatefulSet.Spec.Template.Spec.NodeSelector = instance.Spec.NodeSelector
+		}
 	}
 
 	op, err := controllerutil.CreateOrPatch(ctx, helper.GetClient(), rabbitmq, func() error {
