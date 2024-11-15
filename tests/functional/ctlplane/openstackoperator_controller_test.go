@@ -701,6 +701,7 @@ var _ = Describe("OpenStackOperator controller", func() {
 				err := th.K8sClient.Get(ctx, names.OpenStackClientName, pod)
 				g.Expect(pod).Should(Not(BeNil()))
 				g.Expect(err).ToNot(HaveOccurred())
+				g.Expect(pod.Spec.NodeSelector).To(BeNil())
 				vols := []string{}
 				for _, x := range pod.Spec.Volumes {
 					vols = append(vols, x.Name)
@@ -731,6 +732,41 @@ var _ = Describe("OpenStackOperator controller", func() {
 					k8s_corev1.ConditionTrue,
 				)
 			}, timeout, interval).Should(Succeed())
+
+			Eventually(func(g Gomega) {
+				OSCtlplane := GetOpenStackControlPlane(names.OpenStackControlplaneName)
+				newNodeSelector := map[string]string{
+					"foo": "bar",
+				}
+				OSCtlplane.Spec.NodeSelector = newNodeSelector
+				g.Expect(k8sClient.Update(ctx, OSCtlplane)).Should(Succeed())
+			}, timeout, interval).Should(Succeed())
+
+			// client pod exists
+			Eventually(func(g Gomega) {
+				pod := &k8s_corev1.Pod{}
+				err := th.K8sClient.Get(ctx, names.OpenStackClientName, pod)
+				g.Expect(pod).Should(Not(BeNil()))
+				g.Expect(err).ToNot(HaveOccurred())
+				g.Expect(pod.Spec.NodeSelector).To(Equal(map[string]string{"foo": "bar"}))
+				vols := []string{}
+				for _, x := range pod.Spec.Volumes {
+					vols = append(vols, x.Name)
+				}
+				g.Expect(vols).To(ContainElements("combined-ca-bundle", "openstack-config", "openstack-config-secret"))
+
+				volMounts := map[string][]string{}
+				for _, x := range pod.Spec.Containers[0].VolumeMounts {
+					volMounts[x.Name] = append(volMounts[x.Name], x.MountPath)
+				}
+				g.Expect(volMounts).To(HaveKeyWithValue("combined-ca-bundle", []string{"/etc/pki/ca-trust/extracted/pem/tls-ca-bundle.pem"}))
+				g.Expect(volMounts).To(HaveKeyWithValue("openstack-config", []string{"/home/cloud-admin/.config/openstack/clouds.yaml"}))
+				g.Expect(volMounts).To(HaveKeyWithValue("openstack-config-secret", []string{"/home/cloud-admin/.config/openstack/secure.yaml", "/home/cloud-admin/cloudrc"}))
+
+				// simulate pod being in the ready state
+				th.SimulatePodReady(names.OpenStackClientName)
+			}, timeout, interval).Should(Succeed())
+
 		})
 	})
 
