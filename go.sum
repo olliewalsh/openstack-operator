@@ -100,8 +100,8 @@ github.com/olliewalsh/cinder-operator/api v0.0.0-20241113223022-62c0ff0f8d20 h1:
 github.com/olliewalsh/cinder-operator/api v0.0.0-20241113223022-62c0ff0f8d20/go.mod h1:kMK8lci+S0HNoaf+g2+PGKOF7Xkc2zW9XEmnf1RHhjI=
 github.com/olliewalsh/designate-operator/api v0.0.0-20241112232906-dcac93a51ef5 h1:UWXY6CzpAI7NA5oM8CpzDMaGtc+y+acPaTwmsRAx41M=
 github.com/olliewalsh/designate-operator/api v0.0.0-20241112232906-dcac93a51ef5/go.mod h1:ylxf6O3dpBsem6lRdUOk7c7MVvci9Y+PgT2MzJczpQI=
-github.com/olliewalsh/glance-operator/api v0.0.0-20241109142651-115049ea7939 h1:AsHzEzphN9GCiKKU1Tz2u6aYJViIk1EKZePmPc/W9fs=
-github.com/olliewalsh/glance-operator/api v0.0.0-20241109142651-115049ea7939/go.mod h1:aFpk2decP4vpiyyuLOGzeZEJI3ypIchjj7nGSjCy8xc=
+github.com/olliewalsh/glance-operator/api v0.0.0-20241119235032-5ffbbd34d449 h1:LOs+R7l3LnsCZesNEtY4DWEu1DMNlCjEIte81rp5AJc=
+github.com/olliewalsh/glance-operator/api v0.0.0-20241119235032-5ffbbd34d449/go.mod h1:aFpk2decP4vpiyyuLOGzeZEJI3ypIchjj7nGSjCy8xc=
 github.com/olliewalsh/heat-operator/api v0.0.0-20241112232952-288a19583a84 h1:oo2qM4GPy+fZMiuxMau1J0iXo3HJ7+kjG/OdUILQNrU=
 github.com/olliewalsh/heat-operator/api v0.0.0-20241112232952-288a19583a84/go.mod h1:+CUPkPcR8P4wpTlURPPsE9AD1uNYvvk0JsoIn5JLADM=
 github.com/olliewalsh/horizon-operator/api v0.0.0-20241113150844-bbacd69a9ec6 h1:0sp3h2PLReaMFJXlGmCzb2w4JpnhtbscYX+8citDyXM=

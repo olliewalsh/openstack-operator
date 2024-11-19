@@ -63,7 +63,7 @@ func ReconcileGlance(ctx context.Context, instance *corev1beta1.OpenStackControl
 	}
 
 	if instance.Spec.Glance.Template.NodeSelector == nil {
-		instance.Spec.Glance.Template.NodeSelector = instance.Spec.NodeSelector
+		instance.Spec.Glance.Template.NodeSelector = &instance.Spec.NodeSelector
 	}
 
 	// When component services got created check if there is the need to create a route

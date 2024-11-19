@@ -133,8 +133,6 @@ replace github.com/openstack-k8s-operators/mariadb-operator/api => github.com/ol
 
 replace github.com/openstack-k8s-operators/neutron-operator/api => github.com/olliewalsh/neutron-operator/api v0.0.0-20241108235209-1b55a77319da
 
-replace github.com/openstack-k8s-operators/glance-operator/api => github.com/olliewalsh/glance-operator/api v0.0.0-20241109142651-115049ea7939
-
 replace github.com/openstack-k8s-operators/swift-operator/api => github.com/olliewalsh/swift-operator/api v0.0.0-20241109234654-70db68b30c67
 
 replace github.com/openstack-k8s-operators/telemetry-operator/api => github.com/olliewalsh/telemetry-operator/api v0.0.0-20241109232514-7c5fd383504f
@@ -145,7 +143,7 @@ replace github.com/openstack-k8s-operators/designate-operator/api => github.com/
 
 replace github.com/openstack-k8s-operators/heat-operator/api => github.com/olliewalsh/heat-operator/api v0.0.0-20241112232952-288a19583a84
 
-// UPDATED
+// UPDATED 1
 
 replace github.com/openstack-k8s-operators/keystone-operator/api => github.com/olliewalsh/keystone-operator/api v0.0.0-20241113143307-6d9ec1b0791a
 
@@ -155,4 +153,8 @@ replace github.com/openstack-k8s-operators/nova-operator/api => github.com/ollie
 
 replace github.com/openstack-k8s-operators/placement-operator/api => github.com/olliewalsh/placement-operator/api v0.0.0-20241113210349-212832e6158e
 
+// UPDATED 2
+
 replace github.com/openstack-k8s-operators/cinder-operator/api => github.com/olliewalsh/cinder-operator/api v0.0.0-20241113223022-62c0ff0f8d20
+
+replace github.com/openstack-k8s-operators/glance-operator/api => github.com/olliewalsh/glance-operator/api v0.0.0-20241119235032-5ffbbd34d449
