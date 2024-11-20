@@ -169,7 +169,7 @@ func reconcileGalera(
 	}
 
 	if spec.NodeSelector == nil {
-		spec.NodeSelector = instance.Spec.NodeSelector
+		spec.NodeSelector = &instance.Spec.NodeSelector
 	}
 
 	Log.Info("Reconciling Galera", "Galera.Namespace", instance.Namespace, "Galera.Name", name)

@@ -104,8 +104,8 @@ github.com/olliewalsh/infra-operator/apis v0.0.0-20241110004118-cb441c23ae32 h1:
 github.com/olliewalsh/infra-operator/apis v0.0.0-20241110004118-cb441c23ae32/go.mod h1:bGlNN1grd0q0TmWLe9iEpE2y6AjblBoQ6IIQ5puFHtU=
 github.com/olliewalsh/keystone-operator/api v0.0.0-20241113143307-6d9ec1b0791a h1:CzQCwdguJ75fOu8KQfB59/QWothsllszSsAf7A4oSnw=
 github.com/olliewalsh/keystone-operator/api v0.0.0-20241113143307-6d9ec1b0791a/go.mod h1:3ZVAfShONGUZDenwtq8CHTf3p2CxcH1fN7J7Ff/ZSiQ=
-github.com/olliewalsh/mariadb-operator/api v0.0.0-20241108164045-8c31810835c5 h1:EOuhPNEOUlNQxvNZR4ErNDzkIQjI1NIIGaPRBxUXHp4=
-github.com/olliewalsh/mariadb-operator/api v0.0.0-20241108164045-8c31810835c5/go.mod h1:348EPtAdpE2LxHAH4bHdCMNP7HyX6DevwEsF9DQ0S2k=
+github.com/olliewalsh/mariadb-operator/api v0.0.0-20241120005220-32fb0cf70317 h1:11V1kv1lK7bRCKhy+3qWZ7q5QKnDAj6nsAWykKuxLqk=
+github.com/olliewalsh/mariadb-operator/api v0.0.0-20241120005220-32fb0cf70317/go.mod h1:348EPtAdpE2LxHAH4bHdCMNP7HyX6DevwEsF9DQ0S2k=
 github.com/olliewalsh/neutron-operator/api v0.0.0-20241108235209-1b55a77319da h1:swZkyvqE8SFMbSnQF8+vqjrP6UM5ZeRAFF4omDkZgEw=
 github.com/olliewalsh/neutron-operator/api v0.0.0-20241108235209-1b55a77319da/go.mod h1:O+FIhhff0RsUTR5JNtLvf8yJN2S0r5dSgSYxaX1sY4g=
 github.com/olliewalsh/nova-operator/api v0.0.0-20241113203749-1d55c7cac223 h1:d/GQWMZSGF7DVSx6+A176rED6gOJb+9bmoFpj0PK8I4=

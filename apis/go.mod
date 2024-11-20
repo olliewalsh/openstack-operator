@@ -116,8 +116,6 @@ replace github.com/openshift/api => github.com/openshift/api v0.0.0-202408300231
 // custom RabbitmqClusterSpecCore for OpenStackControlplane (v2.9.0_patches_tag)
 replace github.com/rabbitmq/cluster-operator/v2 => github.com/openstack-k8s-operators/rabbitmq-cluster-operator/v2 v2.6.1-0.20241017142550-a3524acedd49 //allow-merging
 
-replace github.com/openstack-k8s-operators/mariadb-operator/api => github.com/olliewalsh/mariadb-operator/api v0.0.0-20241108164045-8c31810835c5
-
 replace github.com/openstack-k8s-operators/barbican-operator/api => github.com/olliewalsh/barbican-operator/api v0.0.0-20241108164955-3a90b194bbbe
 
 replace github.com/openstack-k8s-operators/neutron-operator/api => github.com/olliewalsh/neutron-operator/api v0.0.0-20241108235209-1b55a77319da
@@ -147,3 +145,5 @@ replace github.com/openstack-k8s-operators/placement-operator/api => github.com/
 replace github.com/openstack-k8s-operators/cinder-operator/api => github.com/olliewalsh/cinder-operator/api v0.0.0-20241113223022-62c0ff0f8d20
 
 replace github.com/openstack-k8s-operators/glance-operator/api => github.com/olliewalsh/glance-operator/api v0.0.0-20241119235032-5ffbbd34d449
+
+replace github.com/openstack-k8s-operators/mariadb-operator/api => github.com/olliewalsh/mariadb-operator/api v0.0.0-20241120005220-32fb0cf70317
