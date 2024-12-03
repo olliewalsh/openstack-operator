@@ -1470,6 +1470,11 @@ func (in *RabbitmqSection) DeepCopy() *RabbitmqSection {
 func (in *RabbitmqTemplate) DeepCopyInto(out *RabbitmqTemplate) {
 	*out = *in
 	in.RabbitmqClusterSpecCore.DeepCopyInto(&out.RabbitmqClusterSpecCore)
+	if in.SpecOverride != nil {
+		in, out := &in.SpecOverride, &out.SpecOverride
+		*out = new(runtime.RawExtension)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.NodeSelector != nil {
 		in, out := &in.NodeSelector, &out.NodeSelector
 		*out = new(map[string]string)

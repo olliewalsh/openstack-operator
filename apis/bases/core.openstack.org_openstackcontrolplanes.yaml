@@ -14674,6 +14674,9 @@ spec:
                           type: object
                         skipPostDeploySteps:
                           type: boolean
+                        specOverride:
+                          type: object
+                          x-kubernetes-preserve-unknown-fields: true
                         terminationGracePeriodSeconds:
                           default: 604800
                           format: int64

@@ -2,6 +2,7 @@ package openstack
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
 	"strings"
 
@@ -312,6 +313,13 @@ func reconcileRabbitMQ(
 
 	if spec.Override.StatefulSet == nil {
 		spec.Override.StatefulSet = &defaultStatefulSet
+	}
+
+	if spec.SpecOverride != nil {
+		err := json.Unmarshal(spec.SpecOverride.Raw, spec.Override.StatefulSet)
+		if err != nil {
+			return mqFailed, ctrl.Result{}, err
+		}
 	}
 
 	if spec.Override.StatefulSet.Spec.Template.Spec.NodeSelector == nil {
