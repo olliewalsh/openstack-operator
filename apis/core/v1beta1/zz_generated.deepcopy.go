@@ -45,6 +45,7 @@ import (
 	placement_operatorapiv1beta1 "github.com/openstack-k8s-operators/placement-operator/api/v1beta1"
 	swift_operatorapiv1beta1 "github.com/openstack-k8s-operators/swift-operator/api/v1beta1"
 	telemetry_operatorapiv1beta1 "github.com/openstack-k8s-operators/telemetry-operator/api/v1beta1"
+	corev1 "k8s.io/api/core/v1"
 	"k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime"
 )
@@ -1472,7 +1473,7 @@ func (in *RabbitmqTemplate) DeepCopyInto(out *RabbitmqTemplate) {
 	in.RabbitmqClusterSpecCore.DeepCopyInto(&out.RabbitmqClusterSpecCore)
 	if in.SpecOverride != nil {
 		in, out := &in.SpecOverride, &out.SpecOverride
-		*out = new(runtime.RawExtension)
+		*out = new(corev1.Pod)
 		(*in).DeepCopyInto(*out)
 	}
 	if in.NodeSelector != nil {

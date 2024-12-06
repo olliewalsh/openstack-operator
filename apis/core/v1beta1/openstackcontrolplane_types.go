@@ -46,8 +46,8 @@ import (
 	swiftv1 "github.com/openstack-k8s-operators/swift-operator/api/v1beta1"
 	telemetryv1 "github.com/openstack-k8s-operators/telemetry-operator/api/v1beta1"
 	rabbitmqv2 "github.com/rabbitmq/cluster-operator/v2/api/v1beta1"
+	corev1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	"k8s.io/apimachinery/pkg/runtime"
 )
 
 const (
@@ -507,7 +507,10 @@ type RabbitmqTemplate struct {
 	// +operator-sdk:csv:customresourcedefinitions:type=spec
 	// Overrides to use when creating the Rabbitmq clusters
 	rabbitmqv2.RabbitmqClusterSpecCore `json:",inline"`
-	SpecOverride                       *runtime.RawExtension `json:"specOverride,omitempty"`
+	// +kubebuilder:validation:EmbeddedResource
+	// +kubebuilder:validation:Optional
+	SpecOverride *corev1.Pod `json:"specOverride,omitempty"`
+	//SpecOverride                       *runtime.RawExtension `json:"specOverride,omitempty"`
 	// +kubebuilder:validation:Optional
 	// +operator-sdk:csv:customresourcedefinitions:type=spec
 	// NodeSelector to target subset of worker nodes running this service

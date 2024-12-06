@@ -2,7 +2,6 @@ package openstack
 
 import (
 	"context"
-	"encoding/json"
 	"fmt"
 	"strings"
 
@@ -238,23 +237,6 @@ func reconcileRabbitMQ(
 				EmbeddedObjectMeta: &rabbitmqv2.EmbeddedObjectMeta{},
 				Spec: &corev1.PodSpec{
 					SecurityContext: &corev1.PodSecurityContext{},
-					Containers: []corev1.Container{
-						{
-							// NOTE(gibi): if this is set according to the
-							// RabbitMQCluster name the the Pod will crash
-							Name: "rabbitmq",
-							// NOTE(gibi): without this the second RabbitMqCluster
-							// will fail as the Pod will have no image.
-							Image: *version.Status.ContainerImages.RabbitmqImage,
-							Env:   envVars,
-							Args: []string{
-								// OSP17 runs kolla_start here, instead just run rabbitmq-server directly
-								"/usr/lib/rabbitmq/bin/rabbitmq-server",
-							},
-						},
-					},
-					InitContainers: []corev1.Container{
-						{Name: "setup-container", SecurityContext: &corev1.SecurityContext{}}},
 				},
 			},
 		},
@@ -316,10 +298,11 @@ func reconcileRabbitMQ(
 	}
 
 	if spec.SpecOverride != nil {
-		err := json.Unmarshal(spec.SpecOverride.Raw, spec.Override.StatefulSet)
-		if err != nil {
-			return mqFailed, ctrl.Result{}, err
-		}
+		// err := json.Unmarshal(spec.SpecOverride.Raw, spec.Override.StatefulSet)
+		// if err != nil {
+		// 	return mqFailed, ctrl.Result{}, err
+		// }
+		spec.SpecOverride.Spec.DeepCopyInto(spec.Override.StatefulSet.Spec.Template.Spec)
 	}
 
 	if spec.Override.StatefulSet.Spec.Template.Spec.NodeSelector == nil {
@@ -329,6 +312,24 @@ func reconcileRabbitMQ(
 			spec.Override.StatefulSet.Spec.Template.Spec.NodeSelector = instance.Spec.NodeSelector
 		}
 	}
+
+	spec.Override.StatefulSet.Spec.Template.Spec.Containers = []corev1.Container{
+		{
+			// NOTE(gibi): if this is set according to the
+			// RabbitMQCluster name the the Pod will crash
+			Name: "rabbitmq",
+			// NOTE(gibi): without this the second RabbitMqCluster
+			// will fail as the Pod will have no image.
+			Image: *version.Status.ContainerImages.RabbitmqImage,
+			Env:   envVars,
+			Args: []string{
+				// OSP17 runs kolla_start here, instead just run rabbitmq-server directly
+				"/usr/lib/rabbitmq/bin/rabbitmq-server",
+			},
+		},
+	}
+	spec.Override.StatefulSet.Spec.Template.Spec.InitContainers = []corev1.Container{
+		{Name: "setup-container", SecurityContext: &corev1.SecurityContext{}}}
 
 	op, err := controllerutil.CreateOrPatch(ctx, helper.GetClient(), rabbitmq, func() error {
 
