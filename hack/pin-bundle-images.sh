@@ -1,6 +1,8 @@
 #!/bin/bash
 set -eo pipefail
 
+set -x
+
 # This script can be executed in 2 modes. If DOCKERFILE is set then we replace the image locations there with pinned SHA version.
 # If no DOCKERFILE is set the script just echo's a list of bundle dependencies to stout as a single common separated line. This
 # is suitable for use with OPM catalog/index creation
